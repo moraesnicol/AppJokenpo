@@ -1,8 +1,9 @@
 
 
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, Button, Alert, Image, ScrollView, TouchableOpacity} from 'react-native';
-
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity} from 'react-native';
+import Topo from './src/components/topo' ;
+import Icone from './src/components/icone' ;
 
 //área principal
 export default class App extends Component {
@@ -10,15 +11,13 @@ export default class App extends Component {
     constructor(props){
       super(props);
 
-      this.state = { escolhaUsuario :  ' ',  
-                           escolhaComputador: ' ', 
-                           resultado: ' ',                            
-      };
+      this.state = { escolhaUsuario :  ' ',  escolhaComputador: ' ', resultado: ' ',  };
     }
 //gerar número aleatório
     jokenpo(escolhaUsuario) {
-    var  numAleatorio  =  Math.floor(Math.random()  * 3 );
-    var escolhaComputador = "";
+    const  numAleatorio  =  Math.floor(Math.random()  * 3 );
+  
+    let escolhaComputador = ' ';
 
     switch(numAleatorio ){
       case 0:  escolhaComputador = 'pedra' ; break;
@@ -27,63 +26,54 @@ export default class App extends Component {
       default: escolhaComputador = ' ';
     }
 
-    var resultado =  '';
+    let  resultado =  ' ';
 
-      if(escolhaComputador == 'pedra' ){
-        if(escolhaUsuario ==  'pedra' ){
+      if(escolhaComputador == 'pedra' ) {
+        if(escolhaUsuario ==  'pedra' ) {
           resultado = 'Ah, vocês Empataram, tente outra vez :( ';
         }
 
-        if(escolhaUsuario == 'papel'){
+        if(escolhaUsuario == 'papel') {
           resultado  = 'Você ganhou!!!! :)' ;
         
         }
       
-        if(escolhaUsuario == 'tesoura'){
+        if(escolhaUsuario == 'tesoura') {
           resultado  = 'Você perdeu! Tente outra vez' ;
          }
         }
 ///
 
-      if(escolhaComputador == 'tesoura'){
-        if(escolhaUsuario ==  'tesoura' ){
+      if(escolhaComputador == 'tesoura') {
+        if(escolhaUsuario ==  'tesoura' ) {
           resultado = 'Ah, vocês Empataram, tente outra vez';
         }
 
-        if(escolhaUsuario == 'pedra'){
+        if(escolhaUsuario == 'pedra') {
           resultado  = 'Você ganhou!!!!' ;
         
         }
-        if(escolhaUsuario == 'papel'){
+        if(escolhaUsuario == 'papel') {
           resultado  = 'Você perdeu! Tente outra vez' ;
         }
         }
 
-        if(escolhaComputador == 'papel'){
-          if(escolhaUsuario ==  'papel' ){
+        if(escolhaComputador == 'papel') {
+          if(escolhaUsuario ==  'papel' ) {
             resultado = 'Ah, vocês Empataram, tente outra vez';
           }
   
-          if(escolhaUsuario == 'tesoura'){
+          if(escolhaUsuario == 'tesoura') {
             resultado  = 'Você ganhou!!!!' ;
           
           }
         
-          if(escolhaUsuario == 'pedra'){
+          if(escolhaUsuario == 'pedra') {
             resultado  = 'Você perdeu! Tente outra vez' ;
           }
           }
 
-
-
-
-
-
-
-      this.setState({ escolhaUsuario  :  escolhaUsuario, 
-                              escolhaComputador  :  escolhaComputador,
-                              resultado : resultado
-                            });
+      this.setState({ escolhaUsuario, escolhaComputador, resultado  });
     }
      //------------------------------------- 
   render() {
@@ -102,92 +92,32 @@ export default class App extends Component {
         </View>
 
       <View style={styles.buttonCenter}>
-      <TouchableOpacity title ="papel"  onPress={  ()   => {this.jokenpo('papel')}}    >
+      <TouchableOpacity title ="papel"  onPress={  ()   => {this.jokenpo('papel')}}>
       <Text style={{color: 'white', fontFamily: 'Roboto',  fontSize: 22,  fontWeight: 'bold', justifyContent: 'center',  marginTop: 5, marginBottom: 5, marginLeft: 30}}> Papel</Text> 
       </TouchableOpacity>
       </View>
       
       <View style={styles.buttonRight}>
-        <TouchableOpacity  title ="tesoura" onPress={  ()   => {this.jokenpo('tesoura')}}    >
+        <TouchableOpacity  title ="tesoura" onPress={  ()   => {this.jokenpo('tesoura')}}>
         <Text style={{color: 'white', fontFamily: 'Roboto',  fontSize: 22,  fontWeight: 'bold', justifyContent: 'center',  marginTop: 5, marginBottom: 5, marginLeft: 13}}> Tesoura</Text> 
         </TouchableOpacity>
         </View>
-       
-        
-        </View>
 
-        
-      
+        </View>
 
       <View style={styles.palco}>
       <Text style={styles.textoResultado}> {this.state.resultado}</Text>
 
-      <Icone escolha={this.state.escolhaComputador} jogador="Computador" ></Icone>
-      <Icone escolha={this.state.escolhaUsuario} jogador="Você" ></Icone>
+      <Icone escolha={this.state.escolhaComputador} jogador="Computador"  />
+      <Icone escolha={this.state.escolhaUsuario} jogador="Você" />
 
       
       </View>
-  
-      
-       
-
-
       </View>
       </ScrollView>
     );
   }
 }
-//------------------------------------------
-
-class Topo extends Component{
-  render() {
-    return (
-<View>   
- <Image source={require('./assets/jokenpotop.png')} style={styles.imagetop} />
-</View>            
-
-    );
-    }
-}
-
-class Icone extends Component {
-    render() { 
-      if(this.props.escolha  == 'pedra' ) {
-      
-        return ( 
-          <View style={styles.icones}>
-          <Text style={{color: 'red', fontFamily: 'Roboto',  fontSize: 22,  fontWeight: 'bold', justifyContent: 'center',  marginTop: 10}}>{this.props.jogador}</Text>
-        <Image source={require('./assets/pedra.png')} />
-        </View>
-); 
-}        else if(this.props.escolha  == 'papel') { 
-  return ( 
-    <View style={styles.icones}>
-    <Text style={{color: '#a900b8', fontFamily: 'Roboto',  fontSize: 22,  fontWeight: 'bold', justifyContent: 'center', marginTop: 10}}>{this.props.jogador}</Text>
-  <Image source={require('./assets/papel.png')} />
-  </View>
-  );
-
-} else if(this.props.escolha  == 'tesoura') {
-  return ( 
-    <View style={styles.icones}>
-    <Text  style={{color: '#d7c938', fontFamily: 'Roboto',  fontSize: 22,  fontWeight: 'bold', justifyContent: 'center', marginTop: 10}}>{this.props.jogador}</Text>
-  <Image source={require('./assets/tesoura.png')} />
-  </View>
-  );
-
- } else {
-            return false; 
-
-            }
-          }
-        }
-
-    
-
-
-
-
 
 //---------------------------------------------
 
